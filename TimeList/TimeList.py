@@ -1,41 +1,72 @@
 #!/usr/bin/env python
 
-import tkinter
-from tkinter import messagebox
+import os
+import json
 import time
+import tkinter
 import threading
+from tkinter import messagebox
 
 root = tkinter.Tk()
 root.withdraw()
-global orange_data = None
-def load_data():
-    with open('OrangeList.json', 'r') as f:
-        orange_data = json.load(f)
+data = None
+
+def load_data(filename):
+    global data
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        messagebox.showerror("错误", "配置文件未找到")
+        root.destroy()
+    except json.JSONDecodeError:
+        messagebox.showerror("错误", "配置文件格式错误")
+        root.destroy()
+    except UnicodeDecodeError:
+        messagebox.showerror("错误", "配置文件编码不是UTF-8无法解码")
 
 def show_time(task):
     current_time = time.strftime("%H:%M:%S")
     messagebox.showinfo("时间",f"时间：{current_time}\n任务：{task}")
 
 def check_time():
-    if orange_data is None:
+    global data
+    
+    if data is None:
         messagebox.showinfo("错误", "配置文件错误")
-    else:
-        time_list = orange_data.get("TimeList")
+        return
+
+    time_list = data.get("TimeList", [])
         
     while True:
+        current_time = time.strftime("%H:%M:%S")
         if isinstance(time_list, list):
             for time_point in time_list:
-                if time_point.get("TimePoint") == time.strftime("%H:%M:%S"):
+                if time_point.get("TimePoint") == current_time:
                     task = time_point.get("Task")
                     show_time(task)
                     # 避免同一整点多次弹窗
                     time.sleep(60)
-                #每秒检查一次
-                time.sleep(1)
+                    break;
+        # 每秒检查一次
+        time.sleep(1)
 
-show_time()
-# 在后台线程中运行检查时间的函数
-threading.Thread(target=check_time, daemon=True).start()
+def select_file():
+    # 弹出选择框
+    file_choice = simpledialog.askstring("选择时间列表", "请输入希望加载的时间列表名（orange, green, red）:")
+    if file_choice = "orange":
+        load_data("OrangeList.json")
+    else if file_choice = "green":
+        load_data("GreenList.json")
+    else if file_choice = "red":
+        load_data("RedList.json")
+    else:
+        messagebox.showerror("错误", "无效的配置文件名")
+        root.destroy()
 
-# 防止脚本退出
-root.mainloop()
+if __name__ == "__main__":
+    load_data()
+    # 在后台线程中运行检查时间的函数
+    threading.Thread(target=check_time, daemon=True).start()
+    # 防止脚本退出
+    root.mainloop()
