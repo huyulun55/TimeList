@@ -14,7 +14,8 @@
 		{"TimePoint":"18:00:00", "Task":"FREYA挂机"},
 		{"TimePoint":"19:00:00", "Task":"板绘"},
 		{"TimePoint":"20:00:00", "Task":"水果"},
-		{"TimePoint":"20:30:00", "Task":"板绘"},
+		{"TimePoint":"20:30:00", "Task":"洗澡"},
+		{"TimePoint":"21:00:00", "Task":"板绘"},
 		{"TimePoint":"22:00:00", "Task":"洗漱"},
 		{"TimePoint":"22:30:00", "Task":"聊天晚安"}
 	]
