@@ -5,7 +5,7 @@ import json
 import time
 import tkinter
 import threading
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 
 root = tkinter.Tk()
 root.withdraw()
@@ -54,18 +54,18 @@ def check_time():
 def select_file():
     # 弹出选择框
     file_choice = simpledialog.askstring("选择时间列表", "请输入希望加载的时间列表名（orange, green, red）:")
-    if file_choice = "orange":
+    if file_choice == "orange":
         load_data("OrangeList.json")
-    else if file_choice = "green":
+    elif file_choice == "green":
         load_data("GreenList.json")
-    else if file_choice = "red":
+    elif file_choice == "red":
         load_data("RedList.json")
     else:
         messagebox.showerror("错误", "无效的配置文件名")
         root.destroy()
 
 if __name__ == "__main__":
-    load_data()
+    select_file()
     # 在后台线程中运行检查时间的函数
     threading.Thread(target=check_time, daemon=True).start()
     # 防止脚本退出
