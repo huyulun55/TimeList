@@ -11,10 +11,14 @@ root = tkinter.Tk()
 root.withdraw()
 data = None
 
+# 获取脚本所在的目录
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 def load_data(filename):
     global data
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
+        file_path = os.path.join(script_dir, filename)
+        with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
     except FileNotFoundError:
         messagebox.showerror("错误", "配置文件未找到")
