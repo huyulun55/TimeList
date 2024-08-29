@@ -1,14 +1,14 @@
 {
 	"TimeList":[
-		{"TimePoint":"8:00:00", "Task":"C/C++面试题"},
+		{"TimePoint":"8:00:00", "Task":"Linux嵌入式练习"},
 		{"TimePoint":"9:00:00", "Task":"FREYA挂机"},
-		{"TimePoint":"9:30:00", "Task":"STM32练习"},
+		{"TimePoint":"9:30:00", "Task":"Linux嵌入式练习"},
 		{"TimePoint":"11:00:00", "Task":"FREYA挂机"},
 		{"TimePoint":"11:30:00", "Task":"中餐"},
 		{"TimePoint":"12:00:00", "Task":"动画"},
 		{"TimePoint":"12:30:00", "Task":"午觉"},
-		{"TimePoint":"14:00:00", "Task":"Linux嵌入式练习"},
-		{"TimePoint":"15:30:00", "Task":"狼族"},
+		{"TimePoint":"14:00:00", "Task":"面试准备"},
+		{"TimePoint":"15:30:00", "Task":"FREYA挂机"},
 		{"TimePoint":"16:00:00", "Task":"Linux嵌入式练习"},
 		{"TimePoint":"17:30:00", "Task":"晚餐(重启)"},
 		{"TimePoint":"18:00:00", "Task":"音游FULLCOMBO"},
