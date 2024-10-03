@@ -56,7 +56,7 @@ def check_time():
         time.sleep(1)
 
 def select_file():
-    # 弹出选择框
+    # 弹出选择框 
     file_choice = simpledialog.askstring("选择时间列表", "请输入希望加载的时间列表名（orange, green, red, blue）:")
     if file_choice == "orange":
         load_data("OrangeList.json")
