@@ -57,15 +57,15 @@ def check_time():
 
 def select_file():
     # 弹出选择框 
-    file_choice = simpledialog.askstring("选择时间列表", "请输入希望加载的时间列表名（orange, green, red, blue）:")
-    if file_choice == "orange":
-        load_data("OrangeList.json")
-    elif file_choice == "green":
-        load_data("GreenList.json")
-    elif file_choice == "red":
-        load_data("RedList.json")
-    elif file_choice == "blue":
-        load_data("BlueList.json")
+    file_choice = simpledialog.askstring("选择时间列表", "请输入希望加载的时间列表名（overtime, bath, leisure, swim）:")
+    if file_choice == "overtime":
+        load_data("OvertimeList.json")
+    elif file_choice == "bath":
+        load_data("BathList.json")
+    elif file_choice == "leisure":
+        load_data("LeisureList.json")
+    elif file_choice == "swim":
+        load_data("SwimList.json")
     else:
         messagebox.showerror("错误", "无效的配置文件名")
         root.destroy()

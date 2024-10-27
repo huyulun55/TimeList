@@ -1,0 +1,18 @@
+{
+	"TimeList":[
+		{"TimePoint":"6:30:00", "Task":"Wash up"},
+		{"TimePoint":"7:00:00", "Task":"Breakfest"},
+		{"TimePoint":"7:30:00", "Task":"Subway & Nikke"},
+		{"TimePoint":"9:00:00", "Task":"Work"},
+		{"TimePoint":"11:30:00", "Task":"Lunch"},
+		{"TimePoint":"12:00:00", "Task":"Naps"},
+		{"TimePoint":"13:00:00", "Task":"Work"},
+		{"TimePoint":"18:30:00", "Task":"Dinner"},
+		{"TimePoint":"19:00:00", "Task":"Work"},
+		{"TimePoint":"20:00:00", "Task":"Subway & The worf"},
+		{"TimePoint":"21:30:00", "Task":"Eat fruits"},
+		{"TimePoint":"22:00:00", "Task":"Wash up"},
+		{"TimePoint":"22:30:00", "Task":"Digital Drawing"},
+		{"TimePoint":"23:30:00", "Task":"Good night"}
+	]
+}
