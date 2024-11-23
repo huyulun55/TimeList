@@ -83,7 +83,7 @@ root.bind("<Button-1>",get_pos)
 # 绑定鼠标左键双击切换透明度
 root.bind("<Double-Button-1>",change_alpha)
 # 绑定鼠标右键双击关闭窗口
-root.bind("<Double-button-3>",close)
+root.bind("<Double-Button-3>",close)
 
 # 鼠标移出窗口
 root.bind("<Leave>",move_1)
