@@ -15,7 +15,6 @@ tkinter.Label(root, justify="left", font=(None, 12), text="djsf").place(x=0, y=0
 all_y = root.winfo_screenheight()
 all_x = root.winfo_screenwidth()
 x,y = 0,0
-rootalpha = 0.1
 is_hide = "right"
 
 # 记录鼠标点击时的相对位置
@@ -30,15 +29,13 @@ def window_move(event):
     # 限制y坐标在屏幕范围内
     new_y = max(0, min(all_y-200, (event.y-y)+root.winfo_y()))
     # 更新窗口的位置
-    root.geometry("160x200+"+str(new_x)+"+"+str(new_y))
+    root.geometry(f"160x200+{new_x}+{new_y}")
 
 def change_alpha(event):
-    global rootalpha
     # 鼠标左键双击在两种透明度之间切换
-    if rootalpha ==0.1:rootalpha=0.8
-    else:rootalpha=0.1
+    alpha = root.attributes("-alpha")
     # 更新透明度
-    root.attributes("-alpha",rootalpha)
+    root.attributes("-alpha", 0.1 if alpha == 0.8 else 0.8)
 
 def close(event):
     # 关闭窗口
@@ -46,7 +43,7 @@ def close(event):
     # 退出程序
     sys.exit()
 
-def move_3(a,b,root=root):
+def hide_window():
     global is_hide
     # 向右隐藏
     if is_hide == "right":
@@ -54,36 +51,49 @@ def move_3(a,b,root=root):
             root.geometry(f"160x200+{root.winfo_x() - 4}+{root.winfo_y()}")
             time.sleep(0.01)
     # 向左隐藏
-    if is_hide == "left":
-        while root.winfo_x() < - 160:
+    elif is_hide == "left":
+        while root.winfo_x() > - 160:
             root.geometry(f"160x200+{root.winfo_x() + 4}+{root.winfo_y()}")
             time.sleep(0.01)
     # 向下隐藏
-    if is_hide == "down":
+    elif is_hide == "down":
         while root.winfo_y() > all_y - 40:
             root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() - 4}")
             time.sleep(0.01)
     # 向上隐藏
-    if is_hide == "up":
-        while root.winfo_t() < 200:
+    elif is_hide == "up":
+        while root.winfo_y() > 200:
             root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() + 4}")
             time.sleep(0.01)
+    is_hide = None
 
 def move_1(event):
     global is_hide
-    # 鼠标离开时隐藏的逻辑
-    if root.winfo_x() >= all_x - 160 and str(event.type) == "Leave":
+    # 检测隐藏条件
+    if root.winfo_x() >= all_x - 40:
         is_hide = "right"
-    elif root.winfo_x() <= 0 and str(event.type) == "Leave":
+    elif root.winfo_x() <= 0:
         is_hide = "left"
-    elif root.winfo_y() >= all_y - 200 and str(event.type) == "Leave":
+    elif root.winfo_y() >= all_y - 40:
         is_hide="down"
-    elif root.winfo_y() <= 0 and str(event.type)=="Leave":
+    elif root.winfo_y() <= 0:
         is_hide="up"
     else:
         return
-    # 启动线程执行隐藏逻辑
-    threading.Thread(target=move_3,args=(root.winfo_x(),root.winfo_y())).start()
+    hide_window()
+
+def restore_window(event):
+    global is_hide
+    if is_hide == "right":
+        root.geometry(f"160x200+{all_x - 160}+{root.winfo_y()}")
+    elif is_hide == "left":
+        root.geometry(f"160x200+0+{root.winfo_y()}")
+    elif is_hide == "down":
+        root.geometry(f"160x200+{root.winfo_x()}+{all_y - 200}")
+    elif is_hide == "up":
+        root.geometry(f"160x200+{root.winfo_x()}+0")
+    # 恢复后取消隐藏状态
+    is_hide = None
 
 # 绑定鼠标左键拖动事件
 root.bind("<B1-Motion>",window_move)
@@ -98,6 +108,6 @@ root.bind("<Double-Button-3>",close)
 # 鼠标移出窗口
 root.bind("<Leave>",move_1)
 # 鼠标移入窗口
-root.bind("<Enter>",move_1)
+root.bind("<Enter>",restore_window)
 
 root.mainloop()
