@@ -81,7 +81,7 @@ root.bind("<B1-Motion>",window_move)
 root.bind("<Button-1>",get_pos)
 
 # 绑定鼠标左键双击切换透明度
-root.bind("<Double-Button_1>",change_alpha)
+root.bind("<Double-Button-1>",change_alpha)
 # 绑定鼠标右键双击关闭窗口
 root.bind("<Double-button-3>",close)
 
