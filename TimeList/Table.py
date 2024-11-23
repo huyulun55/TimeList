@@ -26,9 +26,9 @@ def get_pos(event):
 def window_move(event):
     global x,y
     # 限制x坐标在屏幕范围内
-    new_x = min(all_x-160, (event.x-x)+root.winfo_x())
+    new_x = max(0, min(all_x-160, (event.x-x)+root.winfo_x()))
     # 限制y坐标在屏幕范围内
-    new_y = min(all_y-200, (event.y-y)+root.winfo_y())
+    new_y = max(0, min(all_y-200, (event.y-y)+root.winfo_y()))
     # 更新窗口的位置
     root.geometry("160x200+"+str(new_x)+"+"+str(new_y))
 
@@ -47,33 +47,43 @@ def close(event):
     sys.exit()
 
 def move_3(a,b,root=root):
-    while root.winfo_x() < all_x - 40 and is_hide == "right":
-        # 向右隐藏
-        root.geometry(f"160x200+{root.winfo_x() + 4}+{root.winfo_y()}")
-        time.sleep(0.001)
-    while root.winfo_x()<all_x-160 and is_hide=="left":
-        root.geometry(f"160x200+{root.winfo_x() - 4}+{root.winfo_y()}")
-        time.sleep(0.001)
-    while root.winfo_y()<all_y-200 and is_hide=="up":
-        root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() - 5}")
-        time.sleep(0.001)
-    while root.winfo_x()<all_y-40 and is_hide=="down":
-        root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() + 5}")
-        time.sleep(0.001)
+    global is_hide
+    # 向右隐藏
+    if is_hide == "right":
+        while root.winfo_x() > all_x - 40:
+            root.geometry(f"160x200+{root.winfo_x() - 4}+{root.winfo_y()}")
+            time.sleep(0.01)
+    # 向左隐藏
+    if is_hide == "left":
+        while root.winfo_x() < - 160:
+            root.geometry(f"160x200+{root.winfo_x() + 4}+{root.winfo_y()}")
+            time.sleep(0.01)
+    # 向下隐藏
+    if is_hide == "down":
+        while root.winfo_y() > all_y - 40:
+            root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() - 4}")
+            time.sleep(0.01)
+    # 向上隐藏
+    if is_hide == "up":
+        while root.winfo_t() < 200:
+            root.geometry(f"160x200+{root.winfo_x()}+{root.winfo_y() + 4}")
+            time.sleep(0.01)
 
 def move_1(event):
     global is_hide
-    if root.winfo_x()>=all_x-160 and str(event.type)=="Leave":
-        # 鼠标离开时设置隐藏方向为右
-        is_hide="right"
-    elif root.winfo_x()<=all_x-40 and str(event.type)=="Enter" and not is_hide in"updown":
-        is_hide="left"
-    elif root.winfo_y()>=all_x-200 and str(event.type)=="Leave":
+    # 鼠标离开时隐藏的逻辑
+    if root.winfo_x() >= all_x - 160 and str(event.type) == "Leave":
+        is_hide = "right"
+    elif root.winfo_x() <= 0 and str(event.type) == "Leave":
+        is_hide = "left"
+    elif root.winfo_y() >= all_y - 200 and str(event.type) == "Leave":
         is_hide="down"
-    elif root.winfo_y()<=all_x-40 and str(event.type)=="Enter":
+    elif root.winfo_y() <= 0 and str(event.type)=="Leave":
         is_hide="up"
-    else:pass
-    threading.Thread(target=move_3,args=(root.info_x(),root.winfo_y())).start()
+    else:
+        return
+    # 启动线程执行隐藏逻辑
+    threading.Thread(target=move_3,args=(root.winfo_x(),root.winfo_y())).start()
 
 # 绑定鼠标左键拖动事件
 root.bind("<B1-Motion>",window_move)
