@@ -11,9 +11,6 @@ import tkinter
 import threading
 from tkinter import messagebox, simpledialog
 
-# 设置无缓冲区模式方便打印调试
-sys.stdout = open(sys.stdout.fileno(), mode='w', buffering = 1)
-
 # 定义全局变量
 x = 0
 y = 0
@@ -47,19 +44,28 @@ def initialize_window():
 def load_data(filename):
     global data
     try:
-        file_path = os.path.join(script_dir, filename)
+        # 获取程序所在的目录
+        if getattr(sys, 'frozen', False):  # 检查是否是打包后的应用
+            # 如果是打包后的应用，sys.argv[0] 会是 .exe 文件的路径
+            exe_dir = os.path.dirname(sys.argv[0])  # 获取 .exe 文件所在的目录
+        else:
+            # 在开发环境中，使用当前脚本所在的目录
+            exe_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # 构造配置文件的完整路径
+        file_path = os.path.join(exe_dir, filename)
         with open(file_path, 'r', encoding = 'utf-8') as f:
             data = f.readlines()
         data = ''.join(data)
     except FileNotFoundError:
         messagebox.showerror("错误", "配置文件未找到")
-        root.destroy()
+        root.quit()
     except json.JSONDecodeError:
         messagebox.showerror("错误", "配置文件格式错误")
-        root.destroy()
+        root.quit()
     except UnicodeDecodeError:
         messagebox.showerror("错误", "配置文件编码不是UTF-8无法解码")
-        root.destroy()
+        root.quit()
 
 # 选择配置文件（时间表）
 def select_file():
@@ -74,7 +80,7 @@ def select_file():
         load_data("SwimList.txt")
     else:
         messagebox.showerror("错误", "无效的配置文件名")
-        root.destroy()
+        root.quit()
     # 显示窗口
     root.deiconify()
     # 在窗口的左上角放一个标签，显示文本
