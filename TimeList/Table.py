@@ -18,7 +18,7 @@ root.attributes("-alpha", 0.8)
 # 设置窗口总是位于其他窗口之上
 root.wm_attributes("-topmost", 1)
 # 设置窗口尺寸和初始未知（宽160xp,高200xp,x坐标1375,y坐标200）
-root.geometry(f"{width}x{height}+1375+200")
+root.geometry(f"{width}x{height}+500+300")
 # 在窗口的左上角放一个标签，显示文本
 tkinter.Label(root, justify="left", font=(None, 12), text="djsf").place(x=0, y=0)
 # 获取屏幕长度
@@ -83,7 +83,6 @@ def show_window(step_x, step_y):
     current_y = root.winfo_y()
     # 右隐藏向左显示（5是边缘值）
     if is_hide == "right" and current_x > screen_width - width + 5:
-        print("show right")
         root.geometry(f"{width}x{height}+{current_x - step_x}+{current_y}")
         root.after(10, show_window, step_x, step_y)
     # 左隐藏向右显示（5是边缘值）
@@ -120,10 +119,7 @@ def hide_check(event):
 
 def show_check(event):
     global is_hide
-    print("check")
-    print(f"is_hide = {is_hide}")
     if is_hide == "right":
-        print("right check")
         show_window(4, 0)
     elif is_hide == "left":
         show_window(4, 0)
