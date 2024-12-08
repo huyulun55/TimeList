@@ -14,7 +14,7 @@ from tkinter import messagebox, simpledialog
 # 定义全局变量
 x = 0
 y = 0
-height = 400
+height = 500
 width = 320
 is_hide = None
 data = None
@@ -62,7 +62,9 @@ def load_data(filename):
         schedule = []
         for line in data.splitlines():
             time_point, task = line.split(" - ")
-            schedule.append({"time:" time_point.strip(), "task":task.strip()})
+            schedule.append({"time": time_point.strip(), "task":task.strip()})
+        for index, entry in enumerate(schedule):
+            tkinter.Label(root, justify="left", font=(None, 12), text=f"{entry['time']} - {entry['task']}", fg="black").place(x=0, y=index * 30)
     except FileNotFoundError:
         messagebox.showerror("错误", "配置文件未找到")
         root.quit()
@@ -96,28 +98,27 @@ def select_file():
 def update_schedule():
     current_time = time.strftime("%H:%M")
     # 设置标志位
-    bool flag = false
+    flag = False
     for index, entry in enumerate(schedule):
         # 根据时间匹配当前时间
-        if entry['time'] == current_time
-            flag = true
+        if entry['time'] == current_time:
+            flag = True
 
-    if flag == true
+    if flag == True:
         for widget in root.winfo_children():
             # 清除当前窗口中的所有组件
-            widget_destory()
+            widget.destory()
 
         for index, entry in enumerate(schedule):
             # 根据时间匹配当前时间
-            color "red" if entry['time'] == current_time else "black"
-            tkinter.Label(root, justify="left", font(None, 12), text=f"{entry['time']} - {entry['task']}", fg=color).place(x=0, y=index * 30)
-        flag = false
+            color = "red" if entry['time'] == current_time else "black"
+            tkinter.Label(root, justify="left", font=(None, 12), text=f"{entry['time']} - {entry['task']}", fg=color).place(x=0, y=index * 10)
 
 # 定时检查当前时间并更新窗口内容
 def check_time():
     update_schedule()
     # 每分钟检查一次
-    root.after(60000, chekc_time)
+    root.after(60000, check_time)
 
 # 记录鼠标点击时的相对位置
 def get_pos(event):

@@ -5,7 +5,7 @@ a = Analysis(
     ['Table.py'],
     pathex=[],
     binaries=[],
-    datas=[('OvertimeList.txt', '.')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

@@ -1,17 +1,17 @@
-7:00      Wash up
-7:30      Breakfest
-8:00      Self study
-11:00     Break
-11:30     Lunch
-12:00     Animation
-12:30     naps
-14:00     Study session
-17:00     Break
-17:30     Dinner
-18:00     Music game
-18:30     Swimming
-21:00     Eat fruit
-21:30     Wash up
-22:30     Digital drawing
-23:00     Happy chat
-23:30     Good night
+7:00 - 洗漱
+7:30 - 早餐
+8:00 - 自学
+11:00 - 休息
+11:30 - 午餐
+12:00 - 音游
+12:30 - 午觉
+14:00 - 自学
+17:00 - 休息
+17:30 - 晚餐
+18:00 - 音游
+18:30 - 游泳
+21:00 - 吃水果
+21:30 - 洗漱
+22:00 - 板绘
+23:00 - 看书
+23:30 - 晚安
