@@ -18,6 +18,7 @@ height = 400
 width = 320
 is_hide = None
 data = None
+scheule = []
 root = tkinter.Tk()
 screen_height = 0 
 screen_width = 0
@@ -42,7 +43,7 @@ def initialize_window():
     root.geometry(f"{width}x{height}+{screen_width-width}+200")
 
 def load_data(filename):
-    global data
+    global data, schedule
     try:
         # 获取程序所在的目录
         if getattr(sys, 'frozen', False):  # 检查是否是打包后的应用
@@ -57,6 +58,11 @@ def load_data(filename):
         with open(file_path, 'r', encoding = 'utf-8') as f:
             data = f.readlines()
         data = ''.join(data)
+        #解析时间表数据，假设每行都是“时间 - 事项”
+        schedule = []
+        for line in data.splitlines():
+            time_point, task = line.split(" - ")
+            schedule.append({"time:" time_point.strip(), "task":task.strip()})
     except FileNotFoundError:
         messagebox.showerror("错误", "配置文件未找到")
         root.quit()
@@ -83,8 +89,35 @@ def select_file():
         root.quit()
     # 显示窗口
     root.deiconify()
-    # 在窗口的左上角放一个标签，显示文本
-    tkinter.Label(root, justify="left", font=(None, 12), text=data).place(x=0, y=0)
+    # 初始显示时间表
+    update_schedule()
+
+# 更新窗口中的时间表
+def update_schedule():
+    current_time = time.strftime("%H:%M")
+    # 设置标志位
+    bool flag = false
+    for index, entry in enumerate(schedule):
+        # 根据时间匹配当前时间
+        if entry['time'] == current_time
+            flag = true
+
+    if flag == true
+        for widget in root.winfo_children():
+            # 清除当前窗口中的所有组件
+            widget_destory()
+
+        for index, entry in enumerate(schedule):
+            # 根据时间匹配当前时间
+            color "red" if entry['time'] == current_time else "black"
+            tkinter.Label(root, justify="left", font(None, 12), text=f"{entry['time']} - {entry['task']}", fg=color).place(x=0, y=index * 30)
+        flag = false
+
+# 定时检查当前时间并更新窗口内容
+def check_time():
+    update_schedule()
+    # 每分钟检查一次
+    root.after(60000, chekc_time)
 
 # 记录鼠标点击时的相对位置
 def get_pos(event):
@@ -191,6 +224,7 @@ def show_check(event):
 if __name__ == "__main__":
     initialize_window()
     select_file()
+    root.after(100, check_time)
     # 绑定鼠标左键拖动事件
     root.bind("<B1-Motion>", window_move)
     # 绑定鼠标左键按下事件
